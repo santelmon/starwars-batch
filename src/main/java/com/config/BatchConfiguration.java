@@ -1,7 +1,12 @@
 package com.config;
 
-/**
- * Created by santel on 21/7/17.
- */
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableBatchProcessing
 public class BatchConfiguration {
+
+
+
 }

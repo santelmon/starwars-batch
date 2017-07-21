@@ -2,6 +2,7 @@ package com.starwars.config;
 
 import com.starwars.batch.domain.People;
 import com.starwars.batch.processor.PeopleProcessor;
+import com.starwars.batch.repository.PeopleRepository;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -11,6 +12,7 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -48,17 +50,26 @@ public class Csv2XmlBatchConfiguration {
         return itemReader;
     }
 
-    @Bean(destroyMethod = "")
-    public ItemWriter<People> peopleItemWriter() {
-        StaxEventItemWriter<People> itemWriter = new StaxEventItemWriter<>();
-        itemWriter.setResource(new FileSystemResource("src/main/resources/people.xml"));
-        itemWriter.setRootTagName("peoples");
-        itemWriter.setOverwriteOutput(true);
+//    @Bean(destroyMethod = "")
+//    public ItemWriter<People> peopleItemWriter() {
+//        StaxEventItemWriter<People> itemWriter = new StaxEventItemWriter<>();
+//        itemWriter.setResource(new FileSystemResource("src/main/resources/people.xml"));
+//        itemWriter.setRootTagName("peoples");
+//        itemWriter.setOverwriteOutput(true);
+//
+//        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+//        marshaller.setClassesToBeBound(People.class);
+//
+//        itemWriter.setMarshaller(marshaller);
+//
+//        return itemWriter;
+//    }
 
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setClassesToBeBound(People.class);
-
-        itemWriter.setMarshaller(marshaller);
+    @Bean
+    public ItemWriter<People> peopleItemWriter(PeopleRepository peopleRepository) {
+        RepositoryItemWriter<People> itemWriter = new RepositoryItemWriter<>();
+        itemWriter.setRepository(peopleRepository);
+        itemWriter.setMethodName("save");
 
         return itemWriter;
     }

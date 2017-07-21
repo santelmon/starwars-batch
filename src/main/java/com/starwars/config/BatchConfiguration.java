@@ -11,8 +11,8 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@EnableBatchProcessing
+//@Configuration
+//@EnableBatchProcessing
 public class BatchConfiguration {
 
     @Bean
@@ -25,12 +25,12 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Job job(JobBuilderFactory jobBuilderFactory, Step helloWoldStep) {
+    public Job helloWorldJob(JobBuilderFactory jobBuilderFactory, Step helloWorldStep) {
 
         return jobBuilderFactory
-                .get("job")
+                .get("helloWorldJob")
                 .incrementer(new RunIdIncrementer())
-                .start(helloWoldStep)
+                .start(helloWorldStep)
                 .build();
     }
 }

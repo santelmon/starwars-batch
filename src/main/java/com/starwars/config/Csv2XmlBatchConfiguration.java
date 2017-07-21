@@ -31,7 +31,7 @@ public class Csv2XmlBatchConfiguration {
     public ItemReader<People> peopleItemReader() {
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-        lineTokenizer.setNames( new String[] {"name", "bithYear", "gender", "height", "mass", "eyeColor", "hairColor", "skinColor"});
+        lineTokenizer.setNames( new String[] {"name", "birthYear", "gender", "height", "mass", "eyeColor", "hairColor", "skinColor"});
 
         BeanWrapperFieldSetMapper<People> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         fieldSetMapper.setTargetType(People.class);
@@ -48,10 +48,10 @@ public class Csv2XmlBatchConfiguration {
         return itemReader;
     }
 
-    @Bean//(destroyMethod = "")
+    @Bean(destroyMethod = "")
     public ItemWriter<People> peopleItemWriter() {
         StaxEventItemWriter<People> itemWriter = new StaxEventItemWriter<>();
-        itemWriter.setResource(new FileSystemResource("src/main/resources/people-resources.csv"));
+        itemWriter.setResource(new FileSystemResource("src/main/resources/people.xml"));
         itemWriter.setRootTagName("peoples");
         itemWriter.setOverwriteOutput(true);
 

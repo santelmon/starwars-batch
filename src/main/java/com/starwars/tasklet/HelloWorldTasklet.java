@@ -16,6 +16,6 @@ public class HelloWorldTasklet implements Tasklet {
 
         log.info("Hello World");
 
-        return RepeatStatus.FINISHED
+        return RepeatStatus.FINISHED;
     }
 }
